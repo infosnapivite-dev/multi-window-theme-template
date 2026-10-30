@@ -50,7 +50,7 @@ export default function EventPageView({
         duration: 0.35,
         ease: 'easeOut',
       }}
-      className="absolute inset-0 z-40 w-full h-full overflow-hidden select-none pointer-events-auto bg-transparent"
+      className="absolute inset-0 z-40 w-full h-full overflow-hidden select-none pointer-events-auto bg-transparent touch-none overscroll-none"
     >
       {/* 
         Full Pure Background Image

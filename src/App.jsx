@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Volume2, VolumeX } from 'lucide-react';
 import IPhoneFrame from './components/Chassis/IPhoneFrame';
@@ -6,7 +6,6 @@ import PalaceWindowsGrid from './components/PalaceWindows/PalaceWindowsGrid';
 import EventPageView from './components/PalaceWindows/EventPageView';
 import homeBg from './assets/home-bg.webp';
 import './styles/iphone-mockup.css';
-import { useScrollSync } from './hooks/useScrollSync';
 import { playWindowOpenSound, playWindowCloseSound } from './utils/audio';
 import { WINDOWS_DATA } from './data/windowsData';
 
@@ -24,9 +23,6 @@ const WINDOW_CENTERS = {
 };
 
 export default function App() {
-  const scrollerRef = useRef(null);
-  useScrollSync(scrollerRef);
-
   // Initial landing directly on the Grand Royal Welcome / Home Page (Window 0)
   const [activeWindow, setActiveWindow] = useState(WINDOWS_DATA[0]);
   const [lastWindow, setLastWindow] = useState(WINDOWS_DATA[0]);
@@ -97,8 +93,7 @@ export default function App() {
       <IPhoneFrame>
         <main
           id="mockup-scroll-container"
-          ref={scrollerRef}
-          className="inner-app-scroll relative w-full h-full select-none overflow-hidden"
+          className="inner-app-scroll relative w-full h-full select-none overflow-hidden touch-none"
         >
           {/* 
             Cinematic Camera Viewport

@@ -208,21 +208,26 @@
   }
 }
 
-/* Inner App Containers */
+/* Inner App Containers (Completely Locked & Non-Scrollable) */
 .inner-app-container {
   position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: hidden !important;
+  touch-action: none !important;
+  overscroll-behavior: none !important;
 }
 
 .inner-app-scroll {
   position: relative;
   width: 100%;
   height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
+  touch-action: none !important;
+  overscroll-behavior: none !important;
+  -webkit-overflow-scrolling: auto !important;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
 }
@@ -237,6 +242,14 @@
    MOBILE RESPONSIVENESS (Seamless Fullscreen on Actual Phones <= 600px)
    ========================================================================== */
 @media (max-width: 600px) {
+  html, body, #root {
+    overflow: hidden !important;
+    touch-action: none !important;
+    overscroll-behavior: none !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+  }
+
   .desktop-viewport-container::before,
   .desktop-viewport-container::after {
     display: none;
@@ -252,6 +265,9 @@
     border: none !important;
     background: transparent;
     transform: none !important;
+    overflow: hidden !important;
+    touch-action: none !important;
+    overscroll-behavior: none !important;
   }
 
   .btn-hardware,
