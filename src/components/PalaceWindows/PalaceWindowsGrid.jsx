@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import windowFrameImg from '../../assets/window.png';
+import galleryPreviewImg from '../../assets/gallery-1.webp';
 import { WINDOWS_DATA } from '../../data/windowsData';
 
 /**
@@ -14,29 +15,57 @@ import { WINDOWS_DATA } from '../../data/windowsData';
  * - Zero-flicker architecture: Aperture bounds stay rock-solid fixed so image never shifts or shakes
  * - Smooth frame dissolution: Stone frame cleanly dissolves as zoom lands
  */
-export default function PalaceWindowsGrid({ onSelectWindow, activeWindowId, isClosing }) {
+/**
+ * Directional dispersion offsets when RSVP form opens:
+ * Window 1 (Top-Left) -> flies Left & Up
+ * Window 2 (Top-Center) -> flies Straight Up
+ * Window 3 (Top-Right) -> flies Right & Up
+ * Window 4 (Bottom-Left) -> flies Left & Down
+ * Window 5 (Bottom-Center) -> flies Straight Down
+ * Window 6 (Bottom-Right) -> flies Right & Down
+ */
+const RSVP_DISPERSION_OFFSETS = {
+  welcome: { x: -320, y: -220 },
+  mehendi: { x: 0, y: -300 },
+  sangeet: { x: 320, y: -220 },
+  haldi: { x: -320, y: 220 },
+  wedding: { x: 0, y: 300 },
+  reception: { x: 320, y: 220 },
+};
+
+export default function PalaceWindowsGrid({ onSelectWindow, activeWindowId, isClosing, isRsvpOpen = false }) {
   const [hoveredId, setHoveredId] = useState(null);
 
   return (
-    <div className="absolute inset-0 z-20 pointer-events-auto select-none">
+    <div className="absolute inset-0 z-20 pointer-events-none select-none">
       {WINDOWS_DATA.map((win) => {
         const isHovered = hoveredId === win.id;
         const isActive = activeWindowId === win.id && !isClosing;
         const isAnyZoomed = Boolean(activeWindowId);
 
         return (
-          <button
+          <motion.button
             key={win.id}
             type="button"
             data-window-id={win.id}
             onClick={() => onSelectWindow?.(win)}
-            onMouseEnter={() => !isAnyZoomed && setHoveredId(win.id)}
+            onMouseEnter={() => !isAnyZoomed && !isRsvpOpen && setHoveredId(win.id)}
             onMouseLeave={() => setHoveredId(null)}
-            onFocus={() => !isAnyZoomed && setHoveredId(win.id)}
+            onFocus={() => !isAnyZoomed && !isRsvpOpen && setHoveredId(win.id)}
             onBlur={() => setHoveredId(null)}
             aria-label={`Open ${win.title}`}
+            animate={{
+              x: isRsvpOpen ? RSVP_DISPERSION_OFFSETS[win.id].x : 0,
+              y: isRsvpOpen ? RSVP_DISPERSION_OFFSETS[win.id].y : 0,
+              opacity: isRsvpOpen ? 0 : 1,
+              scale: isRsvpOpen ? 0.72 : 1,
+            }}
+            transition={{
+              duration: isRsvpOpen ? 1.75 : 1.35,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className={`group absolute gpu-layer focus:outline-none ${
-              isAnyZoomed && !isActive ? 'pointer-events-none' : 'cursor-pointer pointer-events-auto'
+              (isAnyZoomed && !isActive) || isRsvpOpen ? 'pointer-events-none' : 'cursor-pointer pointer-events-auto'
             }`}
             style={{
               left: win.left,
@@ -83,12 +112,25 @@ export default function PalaceWindowsGrid({ onSelectWindow, activeWindowId, isCl
                 - Fixed dimensions inside aperture prevent any wobble or jitter
                 - Smooth hover zoom when in overview
               */}
+              {/* Event Background Artwork (For Gallery window, render photo behind frame) */}
+              {win.id === 'haldi' && (
+                <img
+                  src={galleryPreviewImg}
+                  alt=""
+                  loading="eager"
+                  decoding="sync"
+                  className="absolute inset-0 w-full h-full object-cover transform transition-transform duration-500 ease-out will-change-transform"
+                  style={{
+                    transform: isHovered && !isAnyZoomed ? 'scale(1.10)' : 'scale(1.0)',
+                  }}
+                />
+              )}
               <img
                 src={win.image}
                 alt={win.title}
                 loading="eager"
                 decoding="sync"
-                className="w-full h-full object-fill transform transition-transform duration-500 ease-out will-change-transform"
+                className="w-full h-full object-fill transform transition-transform duration-500 ease-out will-change-transform relative z-10"
                 style={{
                   transform: isHovered && !isAnyZoomed ? 'scale(1.10)' : 'scale(1.0)',
                 }}
@@ -153,7 +195,7 @@ export default function PalaceWindowsGrid({ onSelectWindow, activeWindowId, isCl
                 {win.shortTitle}
               </p>
             </div>
-          </button>
+          </motion.button>
         );
       })}
     </div>

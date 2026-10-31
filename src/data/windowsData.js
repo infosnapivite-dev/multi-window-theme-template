@@ -1,7 +1,7 @@
 import window1Img from '../assets/home bg.webp';
 import window2Img from '../assets/mehendi.webp';
 import window3Img from '../assets/Sangeet.webp';
-import window4Img from '../assets/haldi.webp';
+import window4Img from '../assets/haldi.png';
 import window5Img from '../assets/wedding.webp';
 import window6Img from '../assets/thankyou page.webp';
 
@@ -278,25 +278,24 @@ export const WINDOWS_DATA = [
     top: '67.8%',
     width: '25.3%',
     height: '28.8%',
-    title: 'Mangal Haldi Ceremony',
-    shortTitle: 'Haldi Ceremony',
-    subtitle: 'Auspicious Turmeric, Petals & Water Splash',
-    tagline: '॥ मंगल पीठी एवं हल्दी ॥',
-    date: 'Sunday, 14th December 2026',
-    time: '10:00 AM onwards',
-    venue: 'The Neelkanth Lotus Pavilion & Poolside Lawns',
-    dressCode: 'Sunny Yellows, Mustard Silks & Sunshine Florals',
+    title: 'Photo Gallery',
+    shortTitle: 'Gallery',
+    subtitle: 'Pre-Wedding & Royal Memories',
+    tagline: '॥ छायाचित्र दीर्घा ॥',
+    date: 'Moments to Cherish',
+    time: 'Forever in our hearts',
+    venue: 'Royal Memory Lane',
+    dressCode: 'Celebration Elegance',
     image: window4Img,
     themeColor: '#387f9f',
     accentColor: '#f1c40f',
     glowColor: 'rgba(56, 127, 160, 0.45)',
     description:
-      'A radiant morning filled with laughter, holy hymns, and the fragrant touch of organic turmeric, sandalwood, and a shower of fresh yellow marigold petals.',
+      'Glimpses into Pushkal & Radhika\'s journey of love, laughter, and timeless togetherness.',
     highlights: [
-      'Aromatic Turmeric & Rose Petal Snan (Ritual Bath)',
-      'Phoolon Ki Holi (Flower Petal Shower)',
-      'Punjabi Dhol Beats & Boliyan Singers',
-      'Desi Kulhad Chai, Lassi & Crispy Jalebis'
+      'Pre-Wedding Portraits & Celebrations',
+      'Joyous Family Gatherings & Festivities',
+      'Heritage Backdrops & Golden Sunsets'
     ]
   },
   {

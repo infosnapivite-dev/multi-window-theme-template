@@ -4,10 +4,10 @@ import { Volume2, VolumeX } from 'lucide-react';
 import IPhoneFrame from './components/Chassis/IPhoneFrame';
 import PalaceWindowsGrid from './components/PalaceWindows/PalaceWindowsGrid';
 import EventPageView from './components/PalaceWindows/EventPageView';
+import RsvpModal from './components/PalaceWindows/RsvpModal';
 import homeBg from './assets/home-bg.webp';
 import './styles/iphone-mockup.css';
 import { playWindowOpenSound, playWindowCloseSound } from './utils/audio';
-import { WINDOWS_DATA } from './data/windowsData';
 
 /**
  * Center coordinates for each of the 6 windows
@@ -23,15 +23,15 @@ const WINDOW_CENTERS = {
 };
 
 export default function App() {
-  // Initial landing directly on the Grand Royal Welcome / Home Page (Window 0)
-  const [activeWindow, setActiveWindow] = useState(WINDOWS_DATA[0]);
-  const [lastWindow, setLastWindow] = useState(WINDOWS_DATA[0]);
+  // Initial landing directly on the Multi-Window Palace Facade
+  const [activeWindow, setActiveWindow] = useState(null);
+  const [lastWindow, setLastWindow] = useState(null);
   const [isClosing, setIsClosing] = useState(false);
-  const [isFirstLanding, setIsFirstLanding] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [isRsvpOpen, setIsRsvpOpen] = useState(false);
 
   const handleOpenWindow = (win) => {
-    if (isClosing) return;
+    if (isClosing || isRsvpOpen) return;
     if (activeWindow?.id === win.id) {
       handleCloseWindow();
       return;
@@ -39,7 +39,6 @@ export default function App() {
     if (soundEnabled) {
       playWindowOpenSound();
     }
-    setIsFirstLanding(false);
     setLastWindow(win);
     setActiveWindow(win);
     setIsClosing(false);
@@ -51,7 +50,6 @@ export default function App() {
       playWindowCloseSound();
     }
     setIsClosing(true);
-    setIsFirstLanding(false);
 
     // Keep camera transform locked onto lastWindow center for 950ms
     // so the camera smoothly zooms directly backwards out of that specific window!
@@ -59,6 +57,22 @@ export default function App() {
       setActiveWindow(null);
       setIsClosing(false);
     }, 950);
+  };
+
+  const handleOpenRsvp = (e) => {
+    e?.stopPropagation?.();
+    if (isClosing || activeWindow) return;
+    if (soundEnabled) {
+      playWindowOpenSound();
+    }
+    setIsRsvpOpen(true);
+  };
+
+  const handleCloseRsvp = () => {
+    if (soundEnabled) {
+      playWindowCloseSound();
+    }
+    setIsRsvpOpen(false);
   };
 
   const toggleSound = () => {
@@ -125,19 +139,19 @@ export default function App() {
             />
 
             {/* 
-              Palace Facade Inscription
+              Palace Facade Inscription & RSVP Button
               Embedded directly in the sandstone wall above the upper windows.
-              Blended seamlessly into the palace masonry with an engraved stone relief.
             */}
             <div
-              className="absolute inset-x-0 z-10 flex justify-center pointer-events-none select-none transition-opacity duration-300"
+              className={`absolute inset-x-0 z-30 flex items-center justify-center transition-opacity duration-700 pointer-events-auto ${
+                isZoomedIn || isRsvpOpen ? 'opacity-0 pointer-events-none' : 'opacity-95'
+              }`}
               style={{
-                top: '27.9%',
-                opacity: isZoomedIn ? 0 : 0.78,
+                top: '27.4%',
               }}
             >
               <p
-                className="font-serif tracking-[0.24em] uppercase text-[12px] sm:text-[13px] font-medium"
+                className="font-serif tracking-[0.16em] sm:tracking-[0.20em] uppercase text-[11px] sm:text-[12px] font-semibold select-none"
                 style={{
                   color: '#735545',
                   textShadow: '0 1px 1px rgba(255, 255, 255, 0.65), 0 -1px 1px rgba(70, 45, 30, 0.3)',
@@ -146,6 +160,22 @@ export default function App() {
               >
                 Tap any window to enter
               </p>
+
+              {/* RSVP Button */}
+              <motion.button
+                type="button"
+                onClick={handleOpenRsvp}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative z-30 ml-7 sm:ml-9 px-3.5 py-1 sm:px-4 sm:py-1 rounded-full bg-[#fbf7f1]/90 hover:bg-[#faf4ec] border border-[#cfb8a6] text-[#4d3424] font-serif font-bold text-[10.5px] sm:text-[11.5px] tracking-wider uppercase active:scale-95 transition-all cursor-pointer pointer-events-auto flex items-center justify-center whitespace-nowrap"
+                style={{
+                  boxShadow: 'inset 0 2px 3px rgba(60, 38, 24, 0.18), 0 1px 1px rgba(255, 255, 255, 0.85)',
+                  textShadow: '0 1px 0 rgba(255, 255, 255, 0.8)',
+                  touchAction: 'manipulation',
+                }}
+              >
+                <span>RSVP</span>
+              </motion.button>
             </div>
 
             {/* 6 Arched Palace Windows Grid */}
@@ -153,8 +183,15 @@ export default function App() {
               onSelectWindow={handleOpenWindow}
               activeWindowId={activeWindow?.id}
               isClosing={isClosing}
+              isRsvpOpen={isRsvpOpen}
             />
           </motion.div>
+
+          {/* Interactive RSVP Form Modal */}
+          <RsvpModal
+            isOpen={isRsvpOpen}
+            onClose={handleCloseRsvp}
+          />
 
           {/* Ambient Sound Toggle (Fades out when zoomed into a window) */}
           <motion.div
@@ -189,8 +226,6 @@ export default function App() {
                 key={activeWindow.id}
                 windowData={activeWindow}
                 onBack={handleCloseWindow}
-                onNext={handleCloseWindow}
-                isFirstLanding={isFirstLanding}
                 soundEnabled={soundEnabled}
               />
             )}
