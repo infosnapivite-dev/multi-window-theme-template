@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { playWindowCloseSound } from '../../utils/audio';
 import HomeInvitationCard from './HomeInvitationCard';
 import MehendiInvitationCard from './MehendiInvitationCard';
-import SangeetInvitationCard from './SangeetInvitationCard';
+import VenueInvitationCard from './VenueInvitationCard';
 import HaldiInvitationCard from './HaldiInvitationCard';
 import WeddingInvitationCard from './WeddingInvitationCard';
 import ThankYouInvitationCard from './ThankYouInvitationCard';
@@ -74,8 +74,8 @@ export default function EventPageView({
       {/* Mehendi Ceremony Invitation Text for Mehendi Page (Window 2) */}
       {isMehendiPage && <MehendiInvitationCard />}
 
-      {/* Sangeet Evening Invitation Text for Sangeet Page (Window 3) */}
-      {isSangeetPage && <SangeetInvitationCard />}
+      {/* Royal Wedding Venue, Address, Timings, Directions & Countdown (Window 3) */}
+      {isSangeetPage && <VenueInvitationCard />}
 
       {/* Haldi Ceremony Invitation Text for Haldi Page (Window 4) */}
       {isHaldiPage && <HaldiInvitationCard />}

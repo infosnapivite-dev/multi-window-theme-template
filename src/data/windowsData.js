@@ -247,25 +247,25 @@ export const WINDOWS_DATA = [
     top: '32.2%',
     width: '25.3%',
     height: '28.8%',
-    title: 'Sangeet Sandhya',
-    shortTitle: 'Sangeet Night',
-    subtitle: 'A Night of Rhythm, Dance & Royal Splendor',
-    tagline: '॥ संगीत संध्या ॥',
-    date: 'Saturday, 13th December 2026',
-    time: '07:30 PM onwards',
-    venue: 'The Grand Crystal Durbar Ballroom',
-    dressCode: 'Glamorous Evening Wear / Velvet Crimson & Shimmering Gold',
+    title: 'The Wedding Venue',
+    shortTitle: 'Venue',
+    subtitle: 'Location, Timings, Directions & Countdown',
+    tagline: '॥ विवाह स्थल एवं मार्गदर्शन ॥',
+    date: '6th & 7th February 2026',
+    time: '11:00 AM & 05:00 PM',
+    venue: 'Bagh-E-Inayat & The Fort, Jaipur',
+    dressCode: 'Royal Heritage & Traditional Elegance',
     image: window3Img,
     themeColor: '#500a07',
     accentColor: '#ffd369',
     glowColor: 'rgba(80, 10, 7, 0.55)',
     description:
-      'Under the glittering brilliance of crystal chandeliers and flickering candelabras, celebrate with heartfelt family dance performances, dazzling lights, and pulsating rhythms.',
+      'Set against the majestic Aravalli hills in Jaipur, Bagh-E-Inayat and The Fort welcome you with royal courtyards, illuminated fountains, and timeless Rajput hospitality.',
     highlights: [
-      'Special Family & Friends Choreographed Performances',
-      'Live Fusion Symphony & Celebrity DJ',
-      'Royal Cocktail Lounge & Flamboyant Bar',
-      'Gourmet Midnight Street-Food Feasts'
+      'Valet Parking & Chauffeur Services Available',
+      'Dedicated Hospitality & Guest Assistance Desk',
+      'Scenic Photobooths & Historic Palace Views',
+      'Live Google Maps Navigation Support'
     ]
   },
   {
