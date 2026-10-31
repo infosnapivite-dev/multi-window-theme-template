@@ -21,6 +21,7 @@ export default {
       },
       fontFamily: {
         serif: ['"Playfair Display"', 'Cormorant Garamond', 'serif'],
+        cinzel: ['"Cinzel"', 'serif'],
         sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
       }
     },

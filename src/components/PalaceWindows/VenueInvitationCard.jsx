@@ -164,15 +164,26 @@ export default function VenueInvitationCard({ animated = true }) {
           <div className="flex items-center justify-center gap-2 sm:gap-2.5">
             {countdownUnits.map((unit) => (
               <div key={unit.label} className="flex flex-col items-center">
-                {/* Ornate Gold Circle Frame PNG Container */}
+                {/* Ornate Gold Circle Frame PNG Container with Continuous Slow Rotation */}
                 <div className="relative w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center">
-                  <img
+                  <motion.img
                     src={goldCircleImg}
                     alt=""
-                    className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.85)]"
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: 'linear',
+                    }}
+                    className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.85)] will-change-transform"
                   />
-                  {/* Countdown Digit inside the Circle */}
-                  <span className="relative z-10 font-serif font-bold text-xs sm:text-[13px] text-[#ffd778] leading-none tabular-nums drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+                  {/* Countdown Digit inside the Circle with Luxury Cinzel Serif Font */}
+                  <span
+                    className="relative z-10 font-cinzel font-bold text-xs sm:text-[14px] text-[#ffd778] leading-none tabular-nums"
+                    style={{
+                      textShadow: '0 0 8px rgba(255, 215, 120, 0.45), 0 2px 4px rgba(0,0,0,0.95)',
+                    }}
+                  >
                     {unit.value}
                   </span>
                 </div>
