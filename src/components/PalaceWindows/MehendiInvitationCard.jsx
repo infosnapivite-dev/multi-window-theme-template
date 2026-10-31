@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MEHENDI_DETAILS } from '../../data/windowsData';
+import { ChevronRight } from 'lucide-react';
+import { WEDDING_EVENTS_LIST } from '../../data/windowsData';
+import { playWindowOpenSound } from '../../utils/audio';
 import ButterfliesLayer from './ButterfliesLayer';
+import EventDetailPopup from './EventDetailPopup';
 
 /**
  * Animated Musical Notes floating up from the Vintage Gramophone
@@ -24,24 +27,31 @@ const GRAMOPHONE_NOTES = [
 ];
 
 export default function MehendiInvitationCard({ animated = true }) {
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
+  const handleEventClick = (evt) => {
+    playWindowOpenSound();
+    setSelectedEvent(evt);
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
         delayChildren: 0.65,
-        staggerChildren: 0.1,
+        staggerChildren: 0.08,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 16 },
+    hidden: { opacity: 0, y: 14 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.65,
+        duration: 0.55,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -52,82 +62,82 @@ export default function MehendiInvitationCard({ animated = true }) {
       {/* Lifelike 3D Flying Butterflies Layer (Spread around screen edges) */}
       <ButterfliesLayer theme="mehendi" />
 
-      {/* Main Text Content (Vertically centered) */}
+      {/* Main Content Area (Vertically balanced) */}
       <motion.div
         variants={animated ? containerVariants : undefined}
         initial={animated ? 'hidden' : false}
         animate={animated ? 'visible' : false}
-        className="w-full h-full flex flex-col items-center justify-center px-6 text-center relative z-20"
+        className="w-full h-full flex flex-col items-center justify-center px-5 sm:px-6 text-center relative z-20 -translate-y-4 sm:-translate-y-5"
       >
         {/* 1. Date Header */}
         <motion.p
           variants={animated ? itemVariants : undefined}
-          className="font-serif font-medium text-sm sm:text-[15px] tracking-[0.20em] uppercase text-[#fbf6ee] drop-shadow-sm"
+          className="font-serif font-medium text-xs sm:text-[13px] tracking-[0.22em] uppercase text-[#eedcc5] drop-shadow-sm"
         >
-          <span>{MEHENDI_DETAILS.dateDay}</span>
-          <sup className="text-[10px] -top-1 ml-0.5 font-sans font-semibold tracking-normal">
-            {MEHENDI_DETAILS.dateSup}
-          </sup>{' '}
-          <span>{MEHENDI_DETAILS.dateRest}</span>
+          <span>6ᵀᴴ & 7ᵀᴴ FEBRUARY 2026</span>
         </motion.p>
 
-        {/* 2. MEHENDI SOIRÉE Title with Metallic Gold Sheen (Condensed & Tight Kerning) */}
+        {/* 2. WEDDING FESTIVITIES Title with Metallic Gold Sheen */}
         <motion.div
           variants={animated ? itemVariants : undefined}
-          className="mt-4 sm:mt-5 flex justify-center"
+          className="mt-2 sm:mt-2.5 flex justify-center"
         >
           <h1
-            className="font-serif font-bold text-3xl sm:text-[36px] tracking-[0.03em] sm:tracking-[0.04em] uppercase select-none leading-none inline-block"
+            className="font-serif font-bold text-2xl sm:text-[30px] tracking-[0.04em] uppercase select-none leading-tight inline-block text-center"
             style={{
               background: 'linear-gradient(180deg, #fff8dc 0%, #fbd36d 26%, #d8a038 65%, #98650e 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               filter: 'drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45))',
-              transform: 'scaleX(0.92)',
-              transformOrigin: 'center',
             }}
           >
-            {MEHENDI_DETAILS.title}
+            WEDDING FESTIVITIES
           </h1>
         </motion.div>
 
-        {/* 3. Festivities Tagline */}
+        {/* 3. Instruction Tagline */}
+        <motion.p
+          variants={animated ? itemVariants : undefined}
+          className="mt-1 sm:mt-1.5 font-serif italic text-xs text-[#eedcc5]/85 tracking-wide drop-shadow-sm"
+        >
+          Select an event below to view time, date & venue
+        </motion.p>
+
+        {/* 4. All 4 Events List-Type Buttons */}
         <motion.div
           variants={animated ? itemVariants : undefined}
-          className="mt-5 sm:mt-6 space-y-1 font-serif text-sm sm:text-[15px] text-[#fbf6ee] leading-relaxed drop-shadow-sm"
+          className="w-full max-w-[290px] sm:max-w-xs space-y-2 sm:space-y-2.5 mt-4 sm:mt-5 pointer-events-auto"
         >
-          <p>{MEHENDI_DETAILS.taglineLine1}</p>
-          <p>{MEHENDI_DETAILS.taglineLine2}</p>
+          {WEDDING_EVENTS_LIST.map((evt) => (
+            <motion.button
+              key={evt.id}
+              onClick={() => handleEventClick(evt)}
+              whileHover={{ scale: 1.025, x: 2 }}
+              whileTap={{ scale: 0.97 }}
+              className="w-full text-left flex items-center justify-between px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-2xl bg-black/55 hover:bg-black/75 border border-[#d4af37]/40 hover:border-[#ffd778]/80 shadow-[0_4px_16px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all cursor-pointer group"
+            >
+              <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/45 flex items-center justify-center font-serif text-[10px] sm:text-[11px] font-bold text-[#fce59c] group-hover:bg-[#d4af37]/35 transition-colors shrink-0">
+                  {evt.number}
+                </span>
+                <div className="min-w-0">
+                  <h3 className="font-serif font-bold text-xs sm:text-[14px] tracking-wide text-[#fdf8f0] group-hover:text-[#ffd778] transition-colors leading-tight truncate">
+                    {evt.name}
+                  </h3>
+                  <p className="font-sans text-[10px] sm:text-[11px] text-[#eedcc5]/80 mt-0.5 tracking-wide truncate">
+                    {evt.dateBadge} • {evt.time}
+                  </p>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-[#d4af37] group-hover:translate-x-1 group-hover:text-[#ffeaa7] transition-all shrink-0 ml-1.5" />
+            </motion.button>
+          ))}
         </motion.div>
-
-        {/* 4. Event Time */}
-        <motion.p
-          variants={animated ? itemVariants : undefined}
-          className="mt-5 sm:mt-6 font-serif text-sm sm:text-[15px] text-[#fbf6ee] tracking-wide drop-shadow-sm font-normal"
-        >
-          {MEHENDI_DETAILS.time}
-        </motion.p>
-
-        {/* 5. Preposition 'at' */}
-        <motion.p
-          variants={animated ? itemVariants : undefined}
-          className="mt-3.5 sm:mt-4 font-serif italic text-sm text-[#eedcc5] drop-shadow-sm"
-        >
-          {MEHENDI_DETAILS.conjunction}
-        </motion.p>
-
-        {/* 6. Venue */}
-        <motion.p
-          variants={animated ? itemVariants : undefined}
-          className="mt-1.5 font-serif font-medium text-base sm:text-[18px] text-[#fbf6ee] tracking-wide drop-shadow-sm"
-        >
-          {MEHENDI_DETAILS.venue}
-        </motion.p>
       </motion.div>
 
       {/* 
         Floating Animated Musical Notes Emerging from the Vintage Gramophone Instrument
-        Tight, controlled stream drifting gently upward from the horn
+        Horn positioned at ~73.5% X, 70.5% Y
       */}
       <div
         className="absolute pointer-events-none select-none z-30"
@@ -163,6 +173,13 @@ export default function MehendiInvitationCard({ animated = true }) {
           </motion.span>
         ))}
       </div>
+
+      {/* Royal Event Detail Popup Card */}
+      <EventDetailPopup
+        event={selectedEvent}
+        isOpen={Boolean(selectedEvent)}
+        onClose={() => setSelectedEvent(null)}
+      />
     </div>
   );
 }

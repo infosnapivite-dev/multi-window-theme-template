@@ -110,6 +110,65 @@ export const THANK_YOU_DETAILS = {
 };
 
 /**
+ * All 4 Main Wedding Events for the Mehendi Page Interactive Schedule
+ */
+export const WEDDING_EVENTS_LIST = [
+  {
+    id: 'mehendi',
+    number: '01',
+    name: 'Mehendi Soirée',
+    hindiTagline: '॥ मेहँदी सोइरे ॥',
+    dateFull: 'Friday, 6th February 2026',
+    dateBadge: '6 FEB',
+    time: '11:00 am onwards',
+    location: 'Buland Chowk',
+    tagline: "Let's begin the festivities, where music meets mehendi.",
+    dressCode: 'Vibrant Traditional / Mehendi Greens & Pinks',
+    accentColor: '#d4af37',
+  },
+  {
+    id: 'sangeet',
+    number: '02',
+    name: 'Sangeet Evening',
+    hindiTagline: '॥ संगीत संध्या ॥',
+    dateFull: 'Friday, 6th February 2026',
+    dateBadge: '6 FEB',
+    time: '6:00 pm onwards',
+    location: 'The Fort',
+    tagline: 'One night only. Jeeps, stars, sangeet, & chills. Get ready to dance the night away.',
+    dressCode: 'Royal Indo-Western / Glamorous Midnight Glow',
+    accentColor: '#e0a96d',
+  },
+  {
+    id: 'haldi',
+    number: '03',
+    name: 'Haldi Ceremony',
+    subtitle: 'Vibe with Blue',
+    hindiTagline: '॥ हल्दी उत्सव ॥',
+    dateFull: 'Saturday, 7th February 2026',
+    dateBadge: '7 FEB',
+    time: '11:00 am onwards',
+    location: 'Poolside',
+    tagline: 'Sun-kissed, poolside vibes. Haldi but make it Santorini.',
+    dressCode: 'Santorini White & Blue / Sunny Marigold Yellow',
+    accentColor: '#ffd066',
+  },
+  {
+    id: 'wedding',
+    number: '04',
+    name: 'The Wedding Ceremony',
+    hindiTagline: '॥ शुभ विवाह ॥',
+    dateFull: 'Saturday, 7th February 2026',
+    dateBadge: '7 FEB',
+    time: '5:00 pm onward',
+    location: 'Bagh-E-Inayat',
+    tagline: 'Here begins forever. Where masala meets Mozart, and Pushkal & Radhika take their sacred pheras.',
+    dressCode: 'Royal Indian Heritage / Regal Pastels & Gold',
+    accentColor: '#fae092',
+  },
+];
+
+/**
  * 6 Palace Arched Windows & Corresponding Event Pages
  * Matches the reference layout exactly:
  * Row 1: Window 1 (Fort Gate), Window 2 (Mehendi), Window 3 (Sangeet)
