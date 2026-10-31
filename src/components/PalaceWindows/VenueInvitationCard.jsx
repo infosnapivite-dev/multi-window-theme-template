@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, Navigation, ExternalLink, Calendar, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { playWindowOpenSound } from '../../utils/audio';
 import FlashingStarsLayer from './FlashingStarsLayer';
 
@@ -19,14 +19,13 @@ const GET_WEDDING_TARGET = () => {
 function calculateTimeRemaining(target) {
   const diff = target.getTime() - Date.now();
   if (diff <= 0) {
-    return { days: 0, hours: 0, minutes: 0, seconds: 0, isLive: true };
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
   }
   return {
     days: Math.floor(diff / (1000 * 60 * 60 * 24)),
     hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
     minutes: Math.floor((diff / (1000 * 60)) % 60),
     seconds: Math.floor((diff / 1000) % 60),
-    isLive: false,
   };
 }
 
@@ -71,161 +70,136 @@ export default function VenueInvitationCard({ animated = true }) {
   const formatUnit = (num) => String(num).padStart(2, '0');
 
   return (
-    <div className="absolute inset-0 z-20 pointer-events-none select-none overflow-hidden flex flex-col items-center justify-center px-4 sm:px-5">
+    <div className="absolute inset-0 z-20 pointer-events-none select-none overflow-hidden flex flex-col items-center justify-center px-4">
       {/* Animated Flashing Celestial Stars Layer */}
       <FlashingStarsLayer />
 
-      {/* Main Glassmorphic Venue Card */}
+      {/* Main Text Container (Decreased Width, Clean Pure Text Design Without Card Boxes) */}
       <motion.div
         variants={animated ? containerVariants : undefined}
         initial={animated ? 'hidden' : false}
         animate={animated ? 'visible' : false}
-        className="w-full max-w-[325px] sm:max-w-[340px] flex flex-col items-center text-center pointer-events-auto relative z-20 -translate-y-2 sm:-translate-y-3"
+        className="w-full max-w-[225px] sm:max-w-[235px] flex flex-col items-center text-center pointer-events-auto relative z-20 -translate-y-3 sm:-translate-y-4"
       >
-        {/* 1. Header Blessing Badge */}
-        <motion.div variants={animated ? itemVariants : undefined}>
-          <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/45 text-[#ffd778] text-[10px] sm:text-[11px] font-serif uppercase tracking-widest shadow-sm">
-            <Sparkles className="w-3 h-3 text-[#d4af37]" />
-            <span>॥ शुभ विवाह स्थल ॥</span>
-          </span>
-        </motion.div>
-
-        {/* 2. Main Title */}
+        {/* 1. Main Title */}
         <motion.h1
           variants={animated ? itemVariants : undefined}
-          className="font-serif font-bold text-2xl sm:text-[27px] tracking-[0.04em] uppercase select-none leading-tight mt-1.5"
+          className="font-serif font-bold text-2xl sm:text-[25px] tracking-[0.04em] uppercase select-none leading-tight"
           style={{
             background: 'linear-gradient(180deg, #fff8dc 0%, #fbd36d 26%, #d8a038 65%, #98650e 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            filter: 'drop-shadow(0 2px 6px rgba(0, 0, 0, 0.55))',
+            filter: 'drop-shadow(0 2px 6px rgba(0, 0, 0, 0.65))',
           }}
         >
           THE WEDDING VENUE
         </motion.h1>
 
-        {/* 3. Live Countdown Section */}
+        {/* 2. Live Countdown Section (Clean Floating Dials Without Card Boxes) */}
         <motion.div
           variants={animated ? itemVariants : undefined}
-          className="w-full mt-2.5 sm:mt-3"
+          className="w-full mt-3 flex flex-col items-center"
         >
-          <p className="font-serif text-[10px] uppercase tracking-[0.22em] text-[#eedcc5]/80 mb-1.5">
-            Countdown to Celebrations
+          <p className="font-serif text-[9px] uppercase tracking-[0.22em] text-[#eedcc5]/80 mb-1 drop-shadow-sm">
+            Countdown
           </p>
 
-          <div className="grid grid-cols-4 gap-1.5 sm:gap-2 w-full">
+          <div className="flex items-center justify-center gap-2 sm:gap-2.5">
             {/* Days */}
-            <div className="rounded-xl bg-black/60 border border-[#d4af37]/40 backdrop-blur-md py-1.5 px-1 flex flex-col items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
-              <span className="font-serif font-bold text-base sm:text-lg text-[#ffd778] leading-none">
+            <div className="flex flex-col items-center">
+              <span className="font-serif font-bold text-base sm:text-lg text-[#ffd778] leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]">
                 {formatUnit(timeLeft.days)}
               </span>
-              <span className="font-sans text-[8px] sm:text-[9px] uppercase tracking-wider text-[#eedcc5]/70 font-semibold mt-1">
+              <span className="font-sans text-[7.5px] sm:text-[8px] uppercase tracking-wider text-[#eedcc5]/75 font-semibold mt-0.5">
                 Days
               </span>
             </div>
 
+            <span className="text-[#ffd778]/50 text-xs font-serif -mt-2.5">:</span>
+
             {/* Hours */}
-            <div className="rounded-xl bg-black/60 border border-[#d4af37]/40 backdrop-blur-md py-1.5 px-1 flex flex-col items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
-              <span className="font-serif font-bold text-base sm:text-lg text-[#ffd778] leading-none">
+            <div className="flex flex-col items-center">
+              <span className="font-serif font-bold text-base sm:text-lg text-[#ffd778] leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]">
                 {formatUnit(timeLeft.hours)}
               </span>
-              <span className="font-sans text-[8px] sm:text-[9px] uppercase tracking-wider text-[#eedcc5]/70 font-semibold mt-1">
+              <span className="font-sans text-[7.5px] sm:text-[8px] uppercase tracking-wider text-[#eedcc5]/75 font-semibold mt-0.5">
                 Hours
               </span>
             </div>
 
+            <span className="text-[#ffd778]/50 text-xs font-serif -mt-2.5">:</span>
+
             {/* Minutes */}
-            <div className="rounded-xl bg-black/60 border border-[#d4af37]/40 backdrop-blur-md py-1.5 px-1 flex flex-col items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
-              <span className="font-serif font-bold text-base sm:text-lg text-[#ffd778] leading-none">
+            <div className="flex flex-col items-center">
+              <span className="font-serif font-bold text-base sm:text-lg text-[#ffd778] leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]">
                 {formatUnit(timeLeft.minutes)}
               </span>
-              <span className="font-sans text-[8px] sm:text-[9px] uppercase tracking-wider text-[#eedcc5]/70 font-semibold mt-1">
+              <span className="font-sans text-[7.5px] sm:text-[8px] uppercase tracking-wider text-[#eedcc5]/75 font-semibold mt-0.5">
                 Mins
               </span>
             </div>
 
+            <span className="text-[#ffd778]/50 text-xs font-serif -mt-2.5">:</span>
+
             {/* Seconds */}
-            <div className="rounded-xl bg-black/60 border border-[#d4af37]/40 backdrop-blur-md py-1.5 px-1 flex flex-col items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
-              <span className="font-serif font-bold text-base sm:text-lg text-[#ffd778] leading-none tabular-nums">
+            <div className="flex flex-col items-center">
+              <span className="font-serif font-bold text-base sm:text-lg text-[#ffd778] leading-none tabular-nums drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]">
                 {formatUnit(timeLeft.seconds)}
               </span>
-              <span className="font-sans text-[8px] sm:text-[9px] uppercase tracking-wider text-[#eedcc5]/70 font-semibold mt-1">
+              <span className="font-sans text-[7.5px] sm:text-[8px] uppercase tracking-wider text-[#eedcc5]/75 font-semibold mt-0.5">
                 Secs
               </span>
             </div>
           </div>
         </motion.div>
 
-        {/* 4. Address Details Card */}
+        {/* Delicate Golden Divider */}
         <motion.div
           variants={animated ? itemVariants : undefined}
-          className="w-full mt-2.5 p-2.5 sm:p-3 rounded-2xl bg-black/60 border border-[#d4af37]/35 backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.5)] text-left"
-        >
-          <div className="flex items-start gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-[#d4af37]/20 border border-[#d4af37]/40 flex items-center justify-center shrink-0 mt-0.5 text-[#ffd778]">
-              <MapPin className="w-4 h-4" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center justify-between">
-                <span className="text-[9px] sm:text-[10px] font-sans uppercase tracking-widest text-[#eedcc5]/70 font-semibold">
-                  Location & Address
-                </span>
-                <span className="text-[9px] font-serif text-[#ffd778]/90 italic">Jaipur, RJ</span>
-              </div>
-              <h3 className="font-serif font-bold text-xs sm:text-[14px] text-[#fae092] leading-snug mt-0.5">
-                Bagh-E-Inayat & The Fort
-              </h3>
-              <p className="font-serif text-[11px] sm:text-xs text-[#fbf6ee]/85 leading-snug mt-0.5">
-                Near Amer Heritage Valley, Amber Fort Road, Jaipur, Rajasthan — 302028
-              </p>
-            </div>
-          </div>
-        </motion.div>
+          className="w-14 h-px bg-gradient-to-r from-transparent via-[#ffd778]/50 to-transparent my-3"
+        />
 
-        {/* 5. Time & Date Schedule Card */}
+        {/* 3. Address Section (Pure Text Without Card Design) */}
         <motion.div
           variants={animated ? itemVariants : undefined}
-          className="w-full mt-2 p-2.5 sm:p-3 rounded-2xl bg-black/60 border border-[#d4af37]/35 backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.5)] text-left"
+          className="w-full space-y-1 text-center"
         >
-          <div className="flex items-start gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-[#d4af37]/20 border border-[#d4af37]/40 flex items-center justify-center shrink-0 mt-0.5 text-[#ffd778]">
-              <Clock className="w-4 h-4" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center justify-between">
-                <span className="text-[9px] sm:text-[10px] font-sans uppercase tracking-widest text-[#eedcc5]/70 font-semibold">
-                  Ceremony Schedule & Timings
-                </span>
-                <span className="inline-flex items-center gap-1 text-[9px] font-serif text-[#ffd778]">
-                  <Calendar className="w-3 h-3 text-[#d4af37]" />
-                  <span>6 & 7 Feb 2026</span>
-                </span>
-              </div>
-              <div className="mt-1 space-y-0.5 font-serif text-[11px] sm:text-xs text-[#fbf6ee]/85">
-                <p>
-                  <span className="text-[#ffd778] font-semibold">Sangeet & Welcome:</span> 6:00 pm onwards
-                </p>
-                <p>
-                  <span className="text-[#ffd778] font-semibold">Wedding Pheras:</span> 5:00 pm onward
-                </p>
-              </div>
-            </div>
-          </div>
+          <h2 className="font-serif font-bold text-sm sm:text-[15px] text-[#fae092] tracking-wide drop-shadow-[0_2px_5px_rgba(0,0,0,0.9)]">
+            Bagh-E-Inayat & The Fort
+          </h2>
+          <p className="font-serif text-[11px] sm:text-xs text-[#fbf6ee]/90 leading-relaxed drop-shadow-[0_2px_5px_rgba(0,0,0,0.9)]">
+            Near Amer Heritage Valley, Amber Fort Road, Jaipur, Rajasthan — 302028
+          </p>
         </motion.div>
 
-        {/* 6. Get Directions Button */}
+        {/* 4. Time Section (Pure Text Without Card Design) */}
+        <motion.div
+          variants={animated ? itemVariants : undefined}
+          className="w-full mt-2.5 space-y-0.5 text-center"
+        >
+          <p className="font-serif font-semibold text-xs sm:text-[13px] tracking-wide text-[#eedcc5] drop-shadow-[0_2px_5px_rgba(0,0,0,0.9)]">
+            6th & 7th February 2026
+          </p>
+          <p className="font-serif text-[10.5px] sm:text-[11px] text-[#fbf6ee]/80 leading-snug drop-shadow-[0_2px_5px_rgba(0,0,0,0.9)]">
+            Sangeet: 6:00 pm onwards
+          </p>
+          <p className="font-serif text-[10.5px] sm:text-[11px] text-[#fbf6ee]/80 leading-snug drop-shadow-[0_2px_5px_rgba(0,0,0,0.9)]">
+            Wedding Pheras: 5:00 pm onward
+          </p>
+        </motion.div>
+
+        {/* 5. Direction Button (Only Direction Name & Arrow Sign) */}
         <motion.button
           variants={animated ? itemVariants : undefined}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.96 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={handleGetDirections}
           type="button"
-          title="Open Google Maps Directions"
-          className="w-full mt-3 py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#edd085] via-[#fae092] to-[#d4af37] text-[#2c1a06] font-serif font-bold text-xs sm:text-[13px] tracking-wider uppercase shadow-[0_4px_20px_rgba(212,175,55,0.45)] hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/40"
+          title="Direction"
+          className="mt-3.5 py-1.5 sm:py-2 px-5 sm:px-6 rounded-full bg-gradient-to-r from-[#edd085] via-[#fae092] to-[#d4af37] text-[#2c1a06] font-serif font-bold text-xs sm:text-[13px] tracking-wider uppercase shadow-[0_4px_16px_rgba(212,175,55,0.45)] hover:brightness-105 active:scale-95 transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer border border-white/50"
         >
-          <Navigation className="w-4 h-4 text-[#2c1a06] fill-[#2c1a06]" />
-          <span>Get Directions (Google Maps)</span>
-          <ExternalLink className="w-3.5 h-3.5 text-[#2c1a06]/75 ml-0.5" />
+          <span>Direction</span>
+          <ArrowRight className="w-3.5 h-3.5 text-[#2c1a06] stroke-[2.5]" />
         </motion.button>
       </motion.div>
     </div>
