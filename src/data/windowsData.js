@@ -2,7 +2,7 @@ import window1Img from '../assets/home bg.webp';
 import window2Img from '../assets/mehendi.webp';
 import window3Img from '../assets/Sangeet.webp';
 import window4Img from '../assets/haldi.png';
-import window5Img from '../assets/wedding.webp';
+import window5Img from '../assets/wedding.png';
 import window6Img from '../assets/thankyou page.webp';
 
 /**
@@ -216,8 +216,8 @@ export const WINDOWS_DATA = [
     top: '32.2%',
     width: '25.3%',
     height: '28.8%',
-    title: 'Mehendi Ceremony',
-    shortTitle: 'Mehendi Ki Shaam',
+    title: 'Events',
+    shortTitle: 'Events',
     subtitle: 'Henna Reverie & Vintage Melodies',
     tagline: '॥ मेहन्दी रसम ॥',
     date: 'Saturday, 13th December 2026',
@@ -308,8 +308,8 @@ export const WINDOWS_DATA = [
     top: '67.8%',
     width: '25.3%',
     height: '28.8%',
-    title: 'The Grand Royal Wedding',
-    shortTitle: 'The Wedding',
+    title: 'Wardrobe',
+    shortTitle: 'Wardrobe',
     subtitle: 'Varmala & The Seven Sacred Pheras',
     tagline: '॥ शुभ विवाह ॥',
     date: 'Sunday, 14th December 2026',

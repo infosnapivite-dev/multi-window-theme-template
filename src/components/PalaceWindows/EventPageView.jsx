@@ -6,7 +6,7 @@ import HomeInvitationCard from './HomeInvitationCard';
 import MehendiInvitationCard from './MehendiInvitationCard';
 import VenueInvitationCard from './VenueInvitationCard';
 import GalleryCarousel from './GalleryCarousel';
-import WeddingInvitationCard from './WeddingInvitationCard';
+import WardrobeCarousel from './WardrobeCarousel';
 import ThankYouInvitationCard from './ThankYouInvitationCard';
 
 export default function EventPageView({
@@ -67,8 +67,8 @@ export default function EventPageView({
       {/* Royal Wedding Venue, Address, Timings, Directions & Countdown (Window 3) */}
       {isSangeetPage && <VenueInvitationCard />}
 
-      {/* The Wedding Ceremony Invitation Text for Wedding Page (Window 5) */}
-      {isWeddingPage && <WeddingInvitationCard />}
+      {/* Wardrobe Lookbook Carousel for Wardrobe Page (Window 5) */}
+      {isWeddingPage && <WardrobeCarousel />}
 
       {/* Thank You / Warm Regards Text for Thank You Page (Window 6) */}
       {isThankYouPage && <ThankYouInvitationCard />}

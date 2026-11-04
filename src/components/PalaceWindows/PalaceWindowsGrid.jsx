@@ -175,13 +175,13 @@ export default function PalaceWindowsGrid({ onSelectWindow, activeWindowId, isCl
               className="gpu-layer relative z-10 w-full h-full object-fill pointer-events-none select-none drop-shadow-[0_4px_10px_rgba(0,0,0,0.35)]"
             />
 
-            {/* Embedded Ceremony Title on Hover (Carved into the wall below the window) */}
+            {/* Embedded Ceremony Title (Carved into the wall below the window) */}
             <div
               className="absolute left-1/2 -translate-x-1/2 z-30 transition-all duration-300 pointer-events-none whitespace-nowrap"
               style={{
                 top: 'calc(100% + 4px)',
-                opacity: isHovered && !isAnyZoomed ? 0.82 : 0,
-                transform: isHovered && !isAnyZoomed ? 'translate(-50%, 0)' : 'translate(-50%, -3px)',
+                opacity: !isAnyZoomed ? (isHovered ? 1 : 0.9) : 0,
+                transform: 'translate(-50%, 0)',
               }}
             >
               <p
