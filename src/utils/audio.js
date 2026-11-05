@@ -1,6 +1,6 @@
 /**
- * Lightweight Web Audio Synthesizer for Royal Palace Sound Effects
- * No external audio files needed; generates warm acoustic chimes and bells.
+ * Lightweight Web Audio Synthesizer for Soft, Minimal UI Click Sounds
+ * Generates warm, tactile, non-intrusive micro-taps using the Web Audio API.
  */
 
 let audioCtx = null;
@@ -20,7 +20,8 @@ function getAudioContext() {
 }
 
 /**
- * Play a resonant temple chime / singing bowl when opening a palace window
+ * Soft minimal tactile click sound
+ * Ultra-short, warm, subtle tap without any harshness or lingering ring.
  */
 export function playWindowOpenSound() {
   try {
@@ -28,38 +29,38 @@ export function playWindowOpenSound() {
     if (!ctx) return;
 
     const now = ctx.currentTime;
-    const osc1 = ctx.createOscillator();
-    const osc2 = ctx.createOscillator();
+    const osc = ctx.createOscillator();
     const gainNode = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
 
-    // Harmonics: 528Hz (Love/Transformation frequency) + 1056Hz
-    osc1.type = 'sine';
-    osc1.frequency.setValueAtTime(528, now);
-    osc1.frequency.exponentialRampToValueAtTime(523.25, now + 1.2);
+    // Warm rounded low-pass filter to remove any digital sharpness
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(1200, now);
 
-    osc2.type = 'triangle';
-    osc2.frequency.setValueAtTime(1056, now);
-    osc2.frequency.exponentialRampToValueAtTime(1046.5, now + 0.8);
+    // Subtle tactile pitch envelope (drops smoothly from 420Hz to 200Hz in 45ms)
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(420, now);
+    osc.frequency.exponentialRampToValueAtTime(200, now + 0.045);
 
-    gainNode.gain.setValueAtTime(0.001, now);
-    gainNode.gain.linearRampToValueAtTime(0.22, now + 0.04);
-    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 1.4);
+    // Soft minimal envelope: 3ms fast rise, smooth 50ms decay
+    gainNode.gain.setValueAtTime(0.0001, now);
+    gainNode.gain.linearRampToValueAtTime(0.065, now + 0.003);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
 
-    osc1.connect(gainNode);
-    osc2.connect(gainNode);
+    osc.connect(filter);
+    filter.connect(gainNode);
     gainNode.connect(ctx.destination);
 
-    osc1.start(now);
-    osc2.start(now);
-    osc1.stop(now + 1.5);
-    osc2.stop(now + 1.5);
+    osc.start(now);
+    osc.stop(now + 0.055);
   } catch {
     // Graceful fallback if autoplay restrictions block
   }
 }
 
 /**
- * Play a gentle closing harp / bell when returning to palace
+ * Soft minimal close / back sound
+ * Gentle low-frequency tap for back / dismiss actions
  */
 export function playWindowCloseSound() {
   try {
@@ -69,25 +70,30 @@ export function playWindowCloseSound() {
     const now = ctx.currentTime;
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(1000, now);
 
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(659.25, now); // E5
-    osc.frequency.exponentialRampToValueAtTime(440, now + 0.5); // A4
+    osc.frequency.setValueAtTime(300, now);
+    osc.frequency.exponentialRampToValueAtTime(160, now + 0.045);
 
-    gain.gain.setValueAtTime(0.001, now);
-    gain.gain.linearRampToValueAtTime(0.15, now + 0.03);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.linearRampToValueAtTime(0.05, now + 0.003);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045);
 
-    osc.connect(gain);
+    osc.connect(filter);
+    filter.connect(gain);
     gain.connect(ctx.destination);
 
     osc.start(now);
-    osc.stop(now + 0.65);
+    osc.stop(now + 0.05);
   } catch {}
 }
 
 /**
- * Play celebratory sparkle / confetti chime for RSVP
+ * Play a delicate, soft chime for RSVP completion
  */
 export function playBlessingSound() {
   try {
@@ -95,25 +101,28 @@ export function playBlessingSound() {
     if (!ctx) return;
 
     const now = ctx.currentTime;
-    const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6 arpeggio
+    const notes = [523.25, 659.25, 783.99]; // C5, E5, G5 soft triad
 
     notes.forEach((freq, idx) => {
-      const startTime = now + idx * 0.08;
+      const startTime = now + idx * 0.06;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, startTime);
 
-      gain.gain.setValueAtTime(0.001, startTime);
-      gain.gain.linearRampToValueAtTime(0.18, startTime + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.7);
+      gain.gain.setValueAtTime(0.0001, startTime);
+      gain.gain.linearRampToValueAtTime(0.06, startTime + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.35);
 
       osc.connect(gain);
       gain.connect(ctx.destination);
 
       osc.start(startTime);
-      osc.stop(startTime + 0.75);
+      osc.stop(startTime + 0.38);
     });
   } catch {}
 }
+
+// Convenient alias for UI components
+export const playClickSound = playWindowOpenSound;
